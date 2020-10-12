@@ -12,7 +12,7 @@ export default function Home(props) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <hi>Crypto-currency Dashboard</hi>
+      <h1>Crypto Dashboard</h1>
       <table>
         <thead>
           <tr>
@@ -23,22 +23,14 @@ export default function Home(props) {
           </tr>
         </thead>
         <tbody>
-          {data.map(coin=>{
+          {data.map(coin => (
             <tr key={coin.id}>
-              <td>
-                {coin.symbol.toUpperCase()}  
-              </td>
-              <td>
-                {coin.price_change_percentage_24H}
-              </td>
-              <td>
-                {coin.current_price}
-              </td>
-              <td>
-                {coin.market_cap}
-              </td>
+              <td> {coin.symbol.toUpperCase()}  </td>
+              <td> {coin.price_change_percentage_24h} </td>
+              <td> {coin.current_price} </td>
+              <td> {coin.market_cap} </td>
             </tr>
-          })}
+          ))}
         </tbody>
       </table>
     </div>
