@@ -5,6 +5,17 @@ const coinGeckoClient = new CoinGecko();
 
 export default function Home(props) {
   const {data} = props.result;
+
+  const formatPercent = number => `${new Number(number).toFixed(2)}%`
+
+  const formatDollar = (number, maximumSignificantDigits) => new Intl.NumberFormat(
+    'en-US', 
+    {
+    style: 'currency', 
+    currency: 'usd', 
+    maximumSignificantDigits
+  }).format(number);
+
   return (
     <div className={styles.container}>
       <Head>
@@ -13,7 +24,7 @@ export default function Home(props) {
       </Head>
 
       <h1>Crypto Dashboard</h1>
-      <table>
+      <table className = 'table'>
         <thead>
           <tr>
             <th>Symbol</th>
@@ -25,10 +36,19 @@ export default function Home(props) {
         <tbody>
           {data.map(coin => (
             <tr key={coin.id}>
-              <td> {coin.symbol.toUpperCase()}  </td>
-              <td> {coin.price_change_percentage_24h} </td>
-              <td> {coin.current_price} </td>
-              <td> {coin.market_cap} </td>
+              <td> 
+                <img src={coin.image} 
+                style={{width:25, height:25, marginRight:10}}
+                />
+                {coin.symbol.toUpperCase()}  
+              </td>
+              <td> 
+                <span className={coin.price_change_percentage_24h > 0 ? ('text-success'): 'text-danger'} >
+                  {formatPercent(coin.price_change_percentage_24h)}
+                </span>
+              </td>
+              <td> {formatDollar(coin.current_price, 20)} </td>
+              <td> {formatDollar(coin.market_cap, 12)} </td>
             </tr>
           ))}
         </tbody>
